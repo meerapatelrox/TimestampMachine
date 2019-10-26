@@ -1,0 +1,27 @@
+{
+    "manifest_version": 2,
+  
+    "name": "Timestamp Machine",
+    "description": "CTRL+F, but for videos.",
+    "version": "1.0",
+  
+    "browser_action": {
+     "default_icon": "icon.png",
+     "default_popup": "popup.html"
+    },
+
+    "commands": {
+        "_execute_browser_action": {
+          "suggested_key": {
+            "windows": "Ctrl+Shift+F",
+            "mac": "Command+Shift+F",
+            "linux": "Ctrl+Shift+F"
+          }
+        }
+    },
+
+    "permissions": [
+     "activeTab",
+     "storage"
+     ]
+  }
