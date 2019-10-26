@@ -1,19 +1,5 @@
-/*** GETS VIDEO ID FROM URL ***/
-function getVideoID(aVid) {
-  /* Gets URL */
-  chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
-    function(tabs){
-      var curr_url = tabs[0].url;
-      //alert(curr_url); // works!
-      
-      /* Gets video ID */
-      aVid.ID = getUrlVars(curr_url)["v"];
-      alert(aVid.ID);
-    }
-  );
-  }
-
-  function getUrlVars(url) {
+// Get video ID arg from URL
+function getUrlVars(url) {
     var vars = {};
     var parts = url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
         vars[key] = value;
@@ -21,12 +7,30 @@ function getVideoID(aVid) {
     return vars;
 }
 
-var myVid = {
-  ID: ""
-};
+function init(){
+    chrome.tabs.query({currentWindow: true, active: true},function(tabs){
+       url = tabs[0].url;
+       tab = tabs[0];
+       //Now that we have the data we can proceed and do something with it
+       processTab();
+    });
+}
 
-getVideoID(myVid);
-//alert(myVid.ID);
+function processTab(){
+    // Use url & tab as you like
+    arg = getUrlVars(url)["v"];
+    console.log(url);
+    console.log(tab);
+    debug();
+}
+
+function debug() {
+  alert(arg);
+}
+
+var url, tab, arg;
+init();
+
 
 /*** FUNCTIONS ***/
 
@@ -80,6 +84,10 @@ document.getElementById('clear').addEventListener('click', function() {
   document.getElementById('userInput').value = '';
   passInputToContentScript();
   document.getElementById('userInput').focus();
+});
+
+document.getElementById('search').addEventListener('click', function() {
+  alert("Searching!");
 });
 
 /* Received returnSearchInfo message, populate popup UI */ 
