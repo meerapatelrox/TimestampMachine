@@ -1,7 +1,9 @@
 const getYouTubeSubtitles = (youtubeUrl, matchWord) => {
   try {
 
-    return "Timestamps from " + youtubeUrl + " containing '" + matchWord + "':";
+    var heading = "Timestamps from " + youtubeUrl + " containing '" + matchWord + "':";
+
+    return heading;
 
   } catch (error) {
     alert(`Error getting captions: ${error.message}`);
@@ -13,14 +15,16 @@ function init(){
        url = tabs[0].url;
        tab = tabs[0];
        console.log(url)
+
        //Now that we have the data we can proceed and do something with it
        chrome.tabs.executeScript({
 				code: '(' + modifyDOM + ')();' //argument here is a string but function.toString() returns function's code
 			}, (results) => {
-				//Here we have just the innerHTML and not DOM structure
-				console.log('Results: ' + results[0])
-			});
-       //processTab();
+        //Here we have just the innerHTML and not DOM structure
+        transcript = results[0];
+        // console.log('Results: ' + results[0])
+        processTab("Transcript: \n" + transcript);
+      });
     });
 }
 
@@ -28,18 +32,21 @@ function modifyDOM()
 {
   console.log(document)
 
-  /* document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
+  // Get transcript info from browser
+  document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
   document.querySelector('ytd-popup-container > iron-dropdown > #contentWrapper > ytd-menu-popup-renderer > paper-listbox').children[1].click()
-  const allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
+  var allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
+  // console.log(allTranscripts);
   document.querySelector('ytd-engagement-panel-section-list-renderer > #header > ytd-engagement-panel-title-header-renderer > #visibility-button').children[0].click();
-  console.log(allTranscripts); */
+
+  return allTranscripts;
 }
 
-function processTab(){
-    alert(url);
+function processTab(it){
+    alert(it);
 }
 
-var url, tab;
+var url, tab, transcript;
 init();
 
 /*** FUNCTIONS ***/
@@ -100,7 +107,7 @@ document.getElementById('clear').addEventListener('click', function() {
 });
 
 document.getElementById('search').addEventListener('click', function() {
-  alert("Searching!");
+  // alert("Searching!");
   // this is the user input! ---> document.getElementById('userInput').value
   var ts = getYouTubeSubtitles(url, document.getElementById('userInput').value);
   alert(ts);
