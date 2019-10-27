@@ -1,9 +1,9 @@
 const getYouTubeSubtitles = (youtubeUrl, matchWord) => {
   try {
 
-    var heading = "Timestamps from " + youtubeUrl + " containing '" + matchWord + "':";
+    var heading = "Timestamps from " + youtubeUrl + " containing '" + matchWord + "': \n";
 
-    return heading;
+    return heading + "[list here]";
 
   } catch (error) {
     alert(`Error getting captions: ${error.message}`);
@@ -38,7 +38,7 @@ function modifyDOM()
   var allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
   // console.log(allTranscripts);
   document.querySelector('ytd-engagement-panel-section-list-renderer > #header > ytd-engagement-panel-title-header-renderer > #visibility-button').children[0].click();
-
+  document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
   return allTranscripts;
 }
 
