@@ -39,7 +39,7 @@ function init(){
        url = tabs[0].url;
        tab = tabs[0];
        //Now that we have the data we can proceed and do something with it
-       processTab();
+       //processTab();
     });
 }
 
@@ -91,7 +91,6 @@ function selectPrev(){
 /* function passInputToContentScript(){
   passInputToContentScript(false);
 } */
-
 /*** LISTENERS ***/
 document.getElementById('next').addEventListener('click', function() {
   selectNext();
@@ -109,10 +108,10 @@ document.getElementById('clear').addEventListener('click', function() {
 });
 
 document.getElementById('search').addEventListener('click', function() {
-  // alert("Searching!");
+  alert("Searching!");
   // this is the user input! ---> document.getElementById('userInput').value
   const captionTimes =  getYouTubeSubtitles(url, document.getElementById('userInput').value);
-  alert("Transcript: " + captionTimes);
+  //alert("Transcript: " + captionTimes);
 });
 
 /* Received returnSearchInfo message, populate popup UI */ 
