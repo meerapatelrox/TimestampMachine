@@ -4,18 +4,18 @@
 const getYouTubeSubtitles = (youtubeUrl, matchWord) => {
   try {
     //const videoID = getYouTubeID(youtubeUrl);
-    chrome.tabs.getCurrent(tab => {
+    /*chrome.tabs.getCurrent(tab => {
       alert("currentTab: " + tab);
-    })
-
-    document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
+    })*/
+    
+    //document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
     //document.querySelector('ytd-popup-container > iron-dropdown > #contentWrapper > ytd-menu-popup-renderer > paper-listbox').children[1].click()
     //const subtitles = await getSubtitles({ videoID });
-    const allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
+    //const allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
     //document.querySelector('ytd-engagement-panel-section-list-renderer > #header > ytd-engagement-panel-title-header-renderer > #visibility-button').children[0].click();
-    console.log(allTranscripts);
+    //console.log(allTranscripts);
 
-    return allTranscripts;
+    return "allTranscripts";
     /*var arrayMatch = [];
 
     for (var i = 0; i < subtitles.length; i++) {
@@ -38,9 +38,30 @@ function init(){
     chrome.tabs.query({currentWindow: true, active: true},function(tabs){
        url = tabs[0].url;
        tab = tabs[0];
+       console.log(url)
        //Now that we have the data we can proceed and do something with it
+<<<<<<< Updated upstream
+=======
+       chrome.tabs.executeScript({
+				code: '(' + modifyDOM + ')();' //argument here is a string but function.toString() returns function's code
+			}, (results) => {
+				//Here we have just the innerHTML and not DOM structure
+				console.log('Transcript: ' + results[0])
+			});
+>>>>>>> Stashed changes
        //processTab();
     });
+}
+
+function modifyDOM()
+{
+  console.log(document)
+
+  /* document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
+  document.querySelector('ytd-popup-container > iron-dropdown > #contentWrapper > ytd-menu-popup-renderer > paper-listbox').children[1].click()
+  const allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
+  document.querySelector('ytd-engagement-panel-section-list-renderer > #header > ytd-engagement-panel-title-header-renderer > #visibility-button').children[0].click();
+  console.log(allTranscripts); */
 }
 
 function processTab(){
@@ -115,7 +136,7 @@ document.getElementById('search').addEventListener('click', function() {
 });
 
 /* Received returnSearchInfo message, populate popup UI */ 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+/*chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if ('returnSearchInfo' == request.message) {
     processingKey = false;
     if (request.numResults > 0) {
@@ -133,12 +154,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       passInputToContentScript();
     }
   }
-});
+});*/
 
 /* Key listener for selectNext and selectPrev
  * Thanks a lot to Cristy from StackOverflow for this AWESOME solution
  * http://stackoverflow.com/questions/5203407/javascript-multiple-keys-pressed-at-once */
-var map = [];
+/*var map = [];
 onkeydown = onkeyup = function(e) {
     map[e.keyCode] = e.type == 'keydown';
     if (document.getElementById('userInput') === document.activeElement) { //input element is in focus
@@ -152,7 +173,7 @@ onkeydown = onkeyup = function(e) {
         selectPrev();
       }
     }
-}
+}*/
 /*** LISTENERS ***/
 
 /*** INIT ***/
@@ -202,16 +223,16 @@ function(tabs) {
         console.log(response);
       } else {
         console.log(response);
-        document.getElementById('error').innerHTML = ERROR_TEXT;
+        //document.getElementById('error').innerHTML = ERROR_TEXT;
       }
     });
   }
 });
 
 /* Focus onto input form */
-document.getElementById('userInput').focus();
-window.setTimeout( 
-  function(){document.getElementById('userInput').select();}, 0);
+//document.getElementById('userInput').focus();
+//window.setTimeout( 
+  //function(){document.getElementById('userInput').select();}, 0);
 //Thanks to http://stackoverflow.com/questions/480735#comment40578284_14573552
 
 //var makeVisible = document.getElementById('history').style.display == 'none';
