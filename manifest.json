@@ -2,7 +2,7 @@
     "manifest_version": 2,
   
     "name": "Timestamp Machine",
-    "description": "CTRL+F, but for videos.",
+    "description": "A ctrl+F function for searching through videos.",
     "version": "1.0",
   
     "browser_action": {

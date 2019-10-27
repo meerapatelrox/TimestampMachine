@@ -15,12 +15,6 @@ const getYouTubeSubtitles = async (youtubeUrl, matchWord) => {
     }
 
     return arrayMatch;
-    
-    /* return subtitles.reduce(
-      (accumulator, currentSubtitle) =>
-        `${accumulator} ${currentSubtitle.text}`,
-      ''
-    ); */
 
   } catch (error) {
     console.log(`Error getting captions: ${error.message}`);
