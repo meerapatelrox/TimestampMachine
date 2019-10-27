@@ -1,11 +1,38 @@
-// Get video ID arg from URL
-function getUrlVars(url) {
-    var vars = {};
-    var parts = url.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-        vars[key] = value;
-    });
-    return vars;
-}
+//const { getSubtitles } = require('youtube-captions-scraper');
+//const getYouTubeID = require('get-youtube-id');
+
+const getYouTubeSubtitles = (youtubeUrl, matchWord) => {
+  try {
+    //const videoID = getYouTubeID(youtubeUrl);
+    chrome.tabs.getCurrent(tab => {
+      alert("currentTab: " + tab);
+    })
+
+    document.querySelector('#menu-container > #menu > ytd-menu-renderer > yt-icon-button').click();
+    //document.querySelector('ytd-popup-container > iron-dropdown > #contentWrapper > ytd-menu-popup-renderer > paper-listbox').children[1].click()
+    //const subtitles = await getSubtitles({ videoID });
+    const allTranscripts = document.getElementsByTagName('ytd-transcript-body-renderer')[0].innerText;
+    //document.querySelector('ytd-engagement-panel-section-list-renderer > #header > ytd-engagement-panel-title-header-renderer > #visibility-button').children[0].click();
+    console.log(allTranscripts);
+
+    return allTranscripts;
+    /*var arrayMatch = [];
+
+    for (var i = 0; i < subtitles.length; i++) {
+        if (subtitles[i].text.toLowerCase().includes(matchWord.toLowerCase())) {
+            console.log(subtitles[i].text);
+            arrayMatch.push(subtitles[i].start);
+        }
+    }
+
+    return arrayMatch;*/
+
+  } catch (error) {
+    alert(`Error getting captions: ${error.message}`);
+  }
+};
+var url, tab;
+
 
 function init(){
     chrome.tabs.query({currentWindow: true, active: true},function(tabs){
@@ -18,19 +45,10 @@ function init(){
 
 function processTab(){
     // Use url & tab as you like
-    arg = getUrlVars(url)["v"];
-    console.log(url);
-    console.log(tab);
-    debug();
+    alert(url);
 }
 
-function debug() {
-  alert(arg);
-}
-
-var url, tab, arg;
 init();
-
 
 /*** FUNCTIONS ***/
 
@@ -48,6 +66,10 @@ function selectNext(){
     }
   });
 }
+
+gapi.load("client:auth2", function() {
+	gapi.auth2.init({client_id: "769594192979-4q2g6gpjm9ui97pbaq493eeigp4ocipd.apps.googleusercontent.com"});
+});
 
 /* Send message to content script of tab to select previous result */
 function selectPrev(){
@@ -87,7 +109,10 @@ document.getElementById('clear').addEventListener('click', function() {
 });
 
 document.getElementById('search').addEventListener('click', function() {
-  alert("Searching!");
+  // alert("Searching!");
+  // this is the user input! ---> document.getElementById('userInput').value
+  const captionTimes =  getYouTubeSubtitles(url, document.getElementById('userInput').value);
+  alert("Transcript: " + captionTimes);
 });
 
 /* Received returnSearchInfo message, populate popup UI */ 
@@ -133,11 +158,12 @@ onkeydown = onkeyup = function(e) {
 
 /*** INIT ***/
 /* Retrieve from storage whether we should use instant results or not */
-chrome.storage.local.get({
-    'instantResults' : DEFAULT_INSTANT_RESULTS,
-    'maxHistoryLength' : MAX_HISTORY_LENGTH,
+/* chrome.storage.local.get({
+    //'instantResults' : DEFAULT_INSTANT_RESULTS,
+    //'maxHistoryLength' : MAX_HISTORY_LENGTH,
     'searchHistory' : null,
     'isSearchHistoryVisible' : false},
+
   function(result) {
     if(result.instantResults) {
       document.getElementById('userInput').addEventListener('input', function() {
@@ -157,10 +183,10 @@ chrome.storage.local.get({
     } else {
       searchHistory = [];
     }
-    setHistoryVisibility(result.isSearchHistoryVisible);
+    //setHistoryVisibility(result.isSearchHistoryVisible);
     updateHistoryDiv();
   }
-);
+); */
 
 /* Get search info if there is any */
 chrome.tabs.query({
@@ -177,7 +203,7 @@ function(tabs) {
         console.log(response);
       } else {
         console.log(response);
-        document.getElementById('error').textContent = ERROR_TEXT;
+        document.getElementById('error').innerHTML = ERROR_TEXT;
       }
     });
   }
@@ -189,9 +215,9 @@ window.setTimeout(
   function(){document.getElementById('userInput').select();}, 0);
 //Thanks to http://stackoverflow.com/questions/480735#comment40578284_14573552
 
-var makeVisible = document.getElementById('history').style.display == 'none';
-setHistoryVisibility(makeVisible);
-chrome.storage.local.set({isSearchHistoryVisible: makeVisible});
+//var makeVisible = document.getElementById('history').style.display == 'none';
+//setHistoryVisibility(makeVisible);
+//chrome.storage.local.set({isSearchHistoryVisible: makeVisible});
 
-setCaseInsensitiveElement();
+//setCaseInsensitiveElement();
 /*** INIT ***/

@@ -10,7 +10,7 @@ const getYouTubeSubtitles = async (youtubeUrl, matchWord) => {
     for (var i = 0; i < subtitles.length; i++) {
         if (subtitles[i].text.toLowerCase().includes(matchWord.toLowerCase())) {
             console.log(subtitles[i].text);
-            arrayMatch.push(subtitles[i]);
+            arrayMatch.push(subtitles[i].start);
         }
     }
 

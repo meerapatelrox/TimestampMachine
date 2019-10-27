@@ -9,7 +9,15 @@
      "default_icon": "icon.png",
      "default_popup": "popup.html"
     },
-
+    "oauth2": {
+      "client_id": "769594192979-4q2g6gpjm9ui97pbaq493eeigp4ocipd.apps.googleusercontent.com",
+      "scopes": [
+        "https://www.googleapis.com/auth/gmail.modify",
+        "https://www.googleapis.com/auth/drive.file",
+        "https://www.googleapis.com/auth/gmail.readonly",
+        "https://www.googleapis.com/auth/gmail.compose"
+      ]
+    },
     "commands": {
         "_execute_browser_action": {
           "suggested_key": {
@@ -24,5 +32,7 @@
      "activeTab",
      "storage",
      "tabs"
-     ]
+     ],
+     "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.google.com/ https://*.firebaseio.com https://www.googleapis.com 'unsafe-eval'; object-src 'self'"
+
   }
